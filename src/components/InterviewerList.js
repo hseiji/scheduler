@@ -15,9 +15,8 @@ export const InterviewerList = (props) => {
               key={p.id} 
               name={p.name} 
               avatar={p.avatar} 
-              id={p.id} 
-              setInterviewer={(event) => props.setInterviewer(p.id)}
-              selected={p.id === props.interviewer}
+              selected={p.id === props.value}
+              setInterviewer={() => props.onChange(p.id)}
             />
           )
         })
