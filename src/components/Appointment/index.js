@@ -5,6 +5,7 @@ import { Header } from './Header'
 import { Empty } from './Empty'
 import useVisualMode from 'hooks/useVisualMode'
 import { Form } from './Form'
+import { getInterviewersForDay } from 'helpers/selectors'
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -15,6 +16,9 @@ export const Appointment = (props) => {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+
+  console.log(props.state);
+  const listInterviewers = getInterviewersForDay(props.state, props.state.day)
 
   // console.log(props);
   return (
@@ -28,7 +32,7 @@ export const Appointment = (props) => {
           interviewer={props.interview.interviewer.name}
         />
       )}
-      {mode === CREATE && <Form interviewers={[]} onCancel={back}/>}
+      {mode === CREATE && <Form interviewers={listInterviewers} onCancel={back}/>}
     </article>
   )
 }
