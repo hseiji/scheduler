@@ -5,7 +5,6 @@ import { Header } from './Header'
 import { Empty } from './Empty'
 import useVisualMode from 'hooks/useVisualMode'
 import { Form } from './Form'
-import { getInterviewersForDay } from 'helpers/selectors'
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -28,15 +27,13 @@ export const Appointment = (props) => {
 
     console.log("name, interviewer", name, interviewer);
 
-    props.bookInterview(props.id, interview);
-    console.log("props.interview>>", props.interview);
-    transition(SHOW);
+    props.bookInterview(props.id, interview).then(() => {transition(SHOW)});
+
+    console.log("props.interview>>", props.interview); // why undefined?
+
+    // transition(SHOW);
   }
 
-  // console.log(props.state);
-  const listInterviewers = getInterviewersForDay(props.state, props.state.day)
-
-  // console.log(props);
   return (
     <article className="appointment">
       <Header time={props.time}/>
@@ -48,7 +45,7 @@ export const Appointment = (props) => {
           interviewer={props.interview.interviewer}
         />
       )}
-      {mode === CREATE && <Form interviewers={listInterviewers} onCancel={back} onSave={save}/>}
+      {mode === CREATE && <Form interviewers={props.interviewers} onCancel={back} onSave={save}/>}
     </article>
   )
 }
