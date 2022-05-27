@@ -17,7 +17,23 @@ export const Appointment = (props) => {
     props.interview ? SHOW : EMPTY
   );
 
-  console.log(props.state);
+  // When we save an interview
+  function save(name, interviewer) {
+    console.log("on Save");
+    
+    const interview = {
+      student: name,
+      interviewer
+    };
+
+    console.log("name, interviewer", name, interviewer);
+
+    props.bookInterview(props.id, interview);
+    console.log("props.interview>>", props.interview);
+    transition(SHOW);
+  }
+
+  // console.log(props.state);
   const listInterviewers = getInterviewersForDay(props.state, props.state.day)
 
   // console.log(props);
@@ -29,10 +45,10 @@ export const Appointment = (props) => {
       {mode === SHOW && (
         <Show
           student={props.interview.student}
-          interviewer={props.interview.interviewer.name}
+          interviewer={props.interview.interviewer}
         />
       )}
-      {mode === CREATE && <Form interviewers={listInterviewers} onCancel={back}/>}
+      {mode === CREATE && <Form interviewers={listInterviewers} onCancel={back} onSave={save}/>}
     </article>
   )
 }
