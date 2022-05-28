@@ -5,10 +5,15 @@ import { Header } from './Header'
 import { Empty } from './Empty'
 import useVisualMode from 'hooks/useVisualMode'
 import { Form } from './Form'
+import { Status } from './Status'
+import { Confirm } from './Confirm'
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
+const SAVING = "SAVING";
+const DELETING = "DELETING";
+const CONFIRM = "CONFIRM";
 
 export const Appointment = (props) => {
 
@@ -18,21 +23,27 @@ export const Appointment = (props) => {
 
   // When we save an interview
   function save(name, interviewer) {
-    console.log("on Save");
-    
+    console.log("on Save");   
     const interview = {
       student: name,
       interviewer
     };
-
-    console.log("name, interviewer", name, interviewer);
+    // Status: Saving...
+    transition(SAVING);
 
     props.bookInterview(props.id, interview).then(() => {transition(SHOW)});
+  };
 
-    console.log("props.interview>>", props.interview); // why undefined?
+  // When we cancel an interview
+  function cancel() {
+    console.log("on cancel");
 
-    // transition(SHOW);
-  }
+    // Status: Cancelling...
+    transition(DELETING);
+    props.cancelInterview(props.id).then(() => {transition(EMPTY)})
+
+  };
+
 
   return (
     <article className="appointment">
@@ -43,8 +54,12 @@ export const Appointment = (props) => {
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
+          onDelete={() => transition(CONFIRM)}
         />
       )}
+      {mode === SAVING && <Status message={"Saving"}/>}
+      {mode === CONFIRM && <Confirm onCancel={back} onConfirm={cancel} message="Are you sure you would like to delete?" />}
+      {mode === DELETING && <Status message={"Deleting"}/>}
       {mode === CREATE && <Form interviewers={props.interviewers} onCancel={back} onSave={save}/>}
     </article>
   )
