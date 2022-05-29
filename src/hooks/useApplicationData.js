@@ -9,9 +9,22 @@ export const useApplicationData = () => {
     appointments: {},
     interviewers: {}
   });
+
+  // Initialize data from API
+  useEffect(() => {
+    Promise.all([
+      axios.get("/api/days"),
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers"),
+    ]).then((all) => {
+      // console.log(all[2].data);
+      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
+    })
+  }, [])  
   
   const setDay = day => setState({ ...state, day });
   
+  // Booking Interview: clicking Save
   function bookInterview(id, interview) {
     console.log("on bookInterview");
     
@@ -30,6 +43,7 @@ export const useApplicationData = () => {
       .then(() => {setState({ ...state, appointments })})
   };
   
+  // Deleting Interview: clicking trash icon
   function cancelInterview(id) {
     console.log("on cancelInterview");
     const appointment = {
@@ -49,34 +63,26 @@ export const useApplicationData = () => {
 
   // Loop through days and set up number of spots
   const updateSpots = (operation) => {
-    state.days.map((day) => {
-    if(state.day === day.name) {
-      // Add interview: spots = spots - 1
-      if(operation === "add") {
-        let spots = day.spots - 1;
-        day.spots = spots;
-      }
-      if(operation === "delete") {
-        let spots = day.spots + 1;
-        day.spots = spots;          
-      }
-      return {...day};
-    }
-    return day;
-  })};  
+    
+    const updatedDays = {...state.days};
 
-  useEffect(() => {
-
-    Promise.all([
-      axios.get("/api/days"),
-      axios.get("/api/appointments"),
-      axios.get("/api/interviewers"),
-    ]).then((all) => {
-      // console.log(all[2].data);
-      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
+    updatedDays.map((day) => {
+      if(state.day === day.name) {
+        // Add interview: spots = spots - 1
+        if(operation === "add") {
+          let spots = day.spots - 1;
+          day.spots = spots;
+        }
+        if(operation === "delete") {
+          let spots = day.spots + 1;
+          day.spots = spots;
+        }
+        return {...day};
+      }
+      return day;
     })
-
-  }, [])
+    setState({ ...state, updatedDays })
+  };
 
 
   // Returning ...
