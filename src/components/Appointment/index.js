@@ -61,7 +61,6 @@ export const Appointment = (props) => {
   return (
     <article className="appointment">
       <Header time={props.time}/>
-      {/* {props.interview ? <Show student={props.interview.student} interview={props.interview.interviewer.name}/> : <Empty/>} */}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
         <Show
