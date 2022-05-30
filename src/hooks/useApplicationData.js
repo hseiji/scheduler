@@ -64,9 +64,11 @@ export const useApplicationData = () => {
   // Loop through days and set up number of spots
   const updateSpots = (operation) => {
     
-    const updatedDays = {...state.days};
+    let updatedDays = state.days;
+    // console.log("state.days>>", updatedDays);
 
     updatedDays.map((day) => {
+
       if(state.day === day.name) {
         // Add interview: spots = spots - 1
         if(operation === "add") {
@@ -80,8 +82,9 @@ export const useApplicationData = () => {
         return {...day};
       }
       return day;
-    })
-    setState({ ...state, updatedDays })
+    });
+
+    setState({ ...state, updatedDays });
   };
 
 
