@@ -3,13 +3,6 @@ import { useEffect, useReducer } from 'react'
 
 export const useApplicationData = () => {
 
-  // const [state, setState] = useState({
-  //   day: "Monday",
-  //   days: [],
-  //   appointments: {},
-  //   interviewers: {}
-  // });
-
   const SET_DAY = "SET_DAY";
   const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
   const SET_INTERVIEW = "SET_INTERVIEW";
@@ -79,24 +72,18 @@ export const useApplicationData = () => {
   const setDay = day => dispatch({ type: SET_DAY, day });
   
   // Booking Interview: clicking Save
-  function bookInterview(id, interview) {
+  function bookInterview(id, interview, editInterview) {
     console.log("on bookInterview");
     
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
-  
-    // const appointments = {
-    //   ...state.appointments,
-    //   [id]: appointment
-    // };
+
+    console.log("edit >>", editInterview);
     
     return axios.put(`/api/appointments/${id}`, appointment)
-      .then(() => {
-        updateSpots("add")
-        console.log(state.days);
-      })
+      .then(() => {!editInterview && updateSpots("add")})
       .then(() => {dispatch({ type: SET_INTERVIEW, id, interview })})
   };
   
@@ -108,12 +95,7 @@ export const useApplicationData = () => {
       ...state.appointments[id],
       interview: null
     };
-  
-    // const appointments = {
-    //   ...state.appointments,
-    //   [id]: appointment
-    // };
-  
+    
     return axios.delete(`/api/appointments/${id}`, appointment)
       .then(() => {updateSpots("delete")})
       .then(() => {dispatch({ type: SET_INTERVIEW, id, interview: null })})

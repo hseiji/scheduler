@@ -28,14 +28,28 @@ export const Appointment = (props) => {
   // SAVING an interview
   function save(name, interviewer) {
     console.log("on Save");   
+    
+    // Edge case: when interviewer is not selected.
+    if(!interviewer) {
+      alert("Please choose an interviewer");
+      return;
+    }
+
     const interview = {
       student: name,
       interviewer
     };
+
+    // Check mode
+    let editInterview = false;
+    if(mode === "EDIT") {
+      editInterview = true;
+    }
+
     // Status: Saving...
     transition(SAVING, true);
 
-    props.bookInterview(props.id, interview)
+    props.bookInterview(props.id, interview, editInterview)
       .then(() => {transition(SHOW)})
       .catch((error) => {
         console.log("error >>", error);
