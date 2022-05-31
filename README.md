@@ -31,6 +31,10 @@ npm run storybook
 In order to run the server, please utilize the API by forking and cloning the following repository into a separate folder of the project:
 [https://github.com/lighthouse-labs/scheduler-api](https://github.com/lighthouse-labs/scheduler-api).
 
+```sh
+start the server using:
+npm start
+```
 
 ## The Application
 
