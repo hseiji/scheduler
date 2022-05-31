@@ -26,6 +26,12 @@ npm test
 npm run storybook
 ```
 
+## API: scheduler-api
+
+In order to run the server, please utilize the API by forking and cloning the following repository into a separate folder of the project:
+[https://github.com/lighthouse-labs/scheduler-api](https://github.com/lighthouse-labs/scheduler-api).
+
+
 ## The Application
 
 The Scheduler has the following structure:
