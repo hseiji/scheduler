@@ -37,7 +37,6 @@ export const useApplicationData = () => {
         return { ...state, days, appointments, interviewers }
 
       case SET_INTERVIEW:
-        console.log("on SET_INTERVIEW");
         const id = action.id;
         const interview = action.interview;
         const appointment = {
@@ -52,7 +51,6 @@ export const useApplicationData = () => {
       
       case SET_SPOTS:
         const updatedDays = action.updatedDays;
-        console.log("on updatedDays");
         return { ...state, days: updatedDays }
 
       default:
@@ -72,15 +70,11 @@ export const useApplicationData = () => {
   const setDay = day => dispatch({ type: SET_DAY, day });
   
   // Booking Interview: clicking Save
-  function bookInterview(id, interview, editInterview) {
-    console.log("on bookInterview");
-    
+  function bookInterview(id, interview, editInterview) {    
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
-
-    console.log("edit >>", editInterview);
     
     return axios.put(`/api/appointments/${id}`, appointment)
       .then(() => {!editInterview && updateSpots("add")})
@@ -89,8 +83,6 @@ export const useApplicationData = () => {
   
   // Deleting Interview: clicking trash icon
   function cancelInterview(id) {
-    console.log("on cancelInterview");
-
     const appointment = {
       ...state.appointments[id],
       interview: null
@@ -103,10 +95,7 @@ export const useApplicationData = () => {
 
   // Loop through days and set up number of spots
   const updateSpots = (operation) => {
-    
     let updatedDays = state.days;
-    console.log("state.days>>", updatedDays);
-
     updatedDays.map((day) => {
 
       if(state.day === day.name) {

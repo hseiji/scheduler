@@ -27,8 +27,6 @@ export const Appointment = (props) => {
 
   // SAVING an interview
   function save(name, interviewer) {
-    console.log("on Save");   
-    
     // Edge case: when interviewer is not selected.
     if(!interviewer) {
       alert("Please choose an interviewer");
@@ -40,7 +38,7 @@ export const Appointment = (props) => {
       interviewer
     };
 
-    // Check mode
+    // Check mode for Edit (does not reduce spots)
     let editInterview = false;
     if(mode === "EDIT") {
       editInterview = true;
@@ -59,8 +57,6 @@ export const Appointment = (props) => {
 
   // DELETING an interview
   function cancel() {
-    console.log("on cancel");
-
     // Status: Cancelling...
     transition(DELETING, true);
     props.cancelInterview(props.id)
