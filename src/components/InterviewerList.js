@@ -1,6 +1,7 @@
 import React from 'react'
 import 'components/InterviewerList.scss'
 import { InterviewerListItem } from './InterviewerListItem'
+import PropTypes from 'prop-types';
 
 export const InterviewerList = (props) => {
 
@@ -24,5 +25,8 @@ export const InterviewerList = (props) => {
       </ul>
     </section>
   )
-
 }
+
+InterviewerList.propTypes = {
+  interviewers: PropTypes.array.isRequired
+};
