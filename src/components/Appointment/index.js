@@ -28,10 +28,10 @@ export const Appointment = (props) => {
   // SAVING an interview
   function save(name, interviewer) {
     // Edge case: when interviewer is not selected.
-    if(!interviewer) {
-      alert("Please choose an interviewer");
-      return;
-    }
+    // if(!interviewer) {
+    //   alert("Please choose an interviewer");
+    //   return;
+    // }
 
     const interview = {
       student: name,
