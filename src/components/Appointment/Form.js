@@ -31,7 +31,7 @@ export const Form = (props) => {
       setError("Please select an interviewer");
       return;
     }    
-  
+    setError("");
     props.onSave(student, interviewer);
   }
 
