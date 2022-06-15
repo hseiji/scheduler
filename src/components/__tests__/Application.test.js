@@ -13,14 +13,14 @@ describe("Application", () => {
   //   render(<Application />);
   // });
 
-  it("defaults to Monday and changes the schedule when a new day is selected", () => {
+  xit("defaults to Monday and changes the schedule when a new day is selected", () => {
     const { getByText } = render(<Application />);
 
     return waitForElement(() => getByText("Monday"));
   });
 
   //Old
-  it("defaults to Monday and changes the schedule when a new day is selected", () => {
+  xit("defaults to Monday and changes the schedule when a new day is selected", () => {
     const { getByText } = render(<Application />);
 
     return waitForElement(() => getByText("Monday")).then(() => {
@@ -29,7 +29,7 @@ describe("Application", () => {
     });
   });
   //New
-  it("changes the schedule when a new day is selected", async () => {
+  xit("changes the schedule when a new day is selected", async () => {
     const { getByText } = render(<Application />);
 
     await waitForElement(() => getByText("Monday"));
@@ -39,7 +39,7 @@ describe("Application", () => {
     expect(getByText("Leopold Silvers")).toBeInTheDocument();
   });
 
-  it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
+  xit("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
 
     const { container, debug } = render(<Application />);
 
@@ -74,7 +74,7 @@ describe("Application", () => {
   });
 
 
-  it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+  xit("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
 
     // 1. Render the Application.
     const { container, debug } = render(<Application />);
@@ -113,7 +113,7 @@ describe("Application", () => {
     debug();
   });
 
-  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+  xit("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
     // 1. Render the Application.
     const {container} = render(<Application />);
 
@@ -150,7 +150,7 @@ describe("Application", () => {
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   });
 
-  it("shows the save error when failing to save an appointment", async () => {
+  xit("shows the save error when failing to save an appointment", async () => {
     axios.put.mockRejectedValueOnce();
 
     const {container} = render(<Application />);
@@ -177,7 +177,7 @@ describe("Application", () => {
     expect(queryByText(appointment, "Error"));
   });
 
-  it("shows the delete error when failing to delete an existing appointment", async () => {
+  xit("shows the delete error when failing to delete an existing appointment", async () => {
     axios.delete.mockRejectedValueOnce();
 
     const {container} = render(<Application />);
